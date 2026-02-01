@@ -6,37 +6,6 @@ import { Mail, MessageSquare, Phone, MapPin, Send } from "lucide-react";
 import { useState } from "react";
 
 export function ContactContent() {
-    const [formState, setFormState] = useState({ state: 'idle' });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        setFormState({ state: 'submitting' });
-
-        const form = e.target as HTMLFormElement;
-
-        // Get values
-        const name = (form.elements.namedItem('name') as HTMLInputElement)?.value;
-        const email = (form.elements.namedItem('email') as HTMLInputElement)?.value;
-        const phone = (form.elements.namedItem('phone') as HTMLInputElement)?.value;
-        const service = (form.elements.namedItem('service') as HTMLSelectElement)?.value;
-        const message = (form.elements.namedItem('message') as HTMLTextAreaElement)?.value;
-
-        const subject = `New Inquiry from ${name}: ${service}`;
-        const body = `Name: ${name}
-Email: ${email}
-Phone: ${phone}
-Service: ${service}
-
-Message:
-${message}`;
-
-        // Small delay to show "Sending" state for UX, then open mailto
-        setTimeout(() => {
-            window.location.href = `mailto:threepillarsolutions@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            setFormState({ state: 'success' });
-        }, 800);
-    };
-
     return (
         <>
             <PageHeader
@@ -103,93 +72,85 @@ ${message}`;
 
                         {/* Contact Form */}
                         <div className="bg-gray-50 p-8 md:p-10 rounded-3xl border border-gray-100">
-                            {formState.state === 'success' ? (
-                                <div className="h-full flex flex-col items-center justify-center text-center py-12">
-                                    <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
-                                        <Send size={32} />
-                                    </div>
-                                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Message Sent!</h3>
-                                    <p className="text-gray-600">We'll get back to you within 24 hours.</p>
-                                    <Button
-                                        variant="outline"
-                                        className="mt-8"
-                                        onClick={() => setFormState({ state: 'idle' })}
-                                    >
-                                        Send Another Message
-                                    </Button>
-                                </div>
-                            ) : (
-                                <form onSubmit={handleSubmit} className="space-y-6">
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div className="space-y-2">
-                                            <label htmlFor="name" className="text-sm font-medium text-gray-900">Full Name</label>
-                                            <input
-                                                required
-                                                name="name"
-                                                id="name"
-                                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                                placeholder="John Doe"
-                                            />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label htmlFor="email" className="text-sm font-medium text-gray-900">Email Address</label>
-                                            <input
-                                                required
-                                                type="email"
-                                                name="email"
-                                                id="email"
-                                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                                placeholder="john@company.com"
-                                            />
-                                        </div>
-                                    </div>
+                            <form
+                                action="https://formsubmit.co/threepillarsolutions@gmail.com"
+                                method="POST"
+                                className="space-y-6"
+                            >
+                                {/* FormSubmit Configuration */}
+                                <input type="hidden" name="_subject" value="New Inquiry from Three Pillar Site" />
+                                <input type="hidden" name="_captcha" value="false" />
+                                <input type="hidden" name="_template" value="table" />
+                                {/* Optional: Add _next to redirect back to your site, e.g., <input type="hidden" name="_next" value="https://your-domain.com/thanks" /> */}
 
+                                <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label htmlFor="phone" className="text-sm font-medium text-gray-900">Phone Number (Optional)</label>
+                                        <label htmlFor="name" className="text-sm font-medium text-gray-900">Full Name</label>
                                         <input
-                                            name="phone"
-                                            id="phone"
-                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                            placeholder="+91 98765 43210"
-                                        />
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label htmlFor="service" className="text-sm font-medium text-gray-900">Service or Subject</label>
-                                        <select
-                                            name="service"
-                                            id="service"
-                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white"
-                                        >
-                                            <option>General Inquiry</option>
-                                            <option>Social Media Management</option>
-                                            <option>SEO Services</option>
-                                            <option>Paid Advertising</option>
-                                            <option>Content Creation</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label htmlFor="message" className="text-sm font-medium text-gray-900">Message</label>
-                                        <textarea
                                             required
-                                            name="message"
-                                            id="message"
-                                            rows={4}
-                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
-                                            placeholder="Tell us about your project or goals..."
+                                            name="name"
+                                            id="name"
+                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            placeholder="John Doe"
                                         />
                                     </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="email" className="text-sm font-medium text-gray-900">Email Address</label>
+                                        <input
+                                            required
+                                            type="email"
+                                            name="email"
+                                            id="email"
+                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            placeholder="john@company.com"
+                                        />
+                                    </div>
+                                </div>
 
-                                    <Button
-                                        type="submit"
-                                        className="w-full h-12 text-lg"
-                                        disabled={formState.state === 'submitting'}
+                                <div className="space-y-2">
+                                    <label htmlFor="phone" className="text-sm font-medium text-gray-900">Phone Number (Optional)</label>
+                                    <input
+                                        name="phone"
+                                        id="phone"
+                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        placeholder="+91 98765 43210"
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label htmlFor="service" className="text-sm font-medium text-gray-900">Service or Subject</label>
+                                    <select
+                                        name="service"
+                                        id="service"
+                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white"
                                     >
-                                        {formState.state === 'submitting' ? 'Sending...' : 'Send Message'}
-                                    </Button>
-                                </form>
-                            )}
+                                        <option>General Inquiry</option>
+                                        <option>Social Media Management</option>
+                                        <option>SEO Services</option>
+                                        <option>Paid Advertising</option>
+                                        <option>Content Creation</option>
+                                    </select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label htmlFor="message" className="text-sm font-medium text-gray-900">Message</label>
+                                    <textarea
+                                        required
+                                        name="message"
+                                        id="message"
+                                        rows={4}
+                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
+                                        placeholder="Tell us about your project or goals..."
+                                    />
+                                </div>
+
+                                <Button
+                                    type="submit"
+                                    className="w-full h-12 text-lg"
+                                >
+                                    Send Message
+                                </Button>
+                            </form>
                         </div>
                     </div>
                 </div>

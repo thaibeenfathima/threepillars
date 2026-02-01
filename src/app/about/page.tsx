@@ -99,8 +99,8 @@ export default function AboutPage() {
                         {[
                             { name: "Harish", role: "Strategy Lead", image: null },
                             { name: "Thaibeen fathima", role: "Creative Director", image: "/thaibeen-final.jpg" },
-                            { name: "Hariharan", role: "SEO Specialist", image: "/hariharan-final.jpg" },
-                            { name: "Lokesh", role: "Ads Manager", image: "/lokesh-final.jpg" }
+                            { name: "Hariharan", role: "SEO Specialist", image: "/hariharan.jpg" },
+                            { name: "Lokesh", role: "Ads Manager", image: "/lokesh.jpg" }
                         ].map((member, i) => (
                             <div key={i} className="group text-center">
                                 <div className="aspect-square bg-gray-100 rounded-full mb-6 overflow-hidden relative mx-auto w-48 border-4 border-white shadow-lg">
